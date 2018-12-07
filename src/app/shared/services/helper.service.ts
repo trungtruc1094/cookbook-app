@@ -9,7 +9,9 @@ import { Store } from "@ngrx/store";
 
 import * as fromRoot from '../../app.reducer';
 
-declare var PNotify: any;
+import PNotify from 'node_modules/pnotify/dist/es/PNotify.js';
+import PNotifyButtons from 'node_modules/pnotify/dist/es/PNotifyButtons.js';
+
 declare var $: any;
 @Injectable()
 export class HelperService {
@@ -54,6 +56,8 @@ export class HelperService {
     public categories = [];
 
     public showPNotify(title, message, type) {
+        console.log('Showing notify');
+        // PNotify.defaults.styling = 'material';
         new PNotify({
             target: document.body,
             data: {

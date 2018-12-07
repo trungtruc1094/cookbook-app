@@ -26,8 +26,8 @@
                   <input type="text" class="form-control" placeholder="Enter your recipe name" formControlName="recipeName"
                     required />
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeName.invalid && exampleForm.controls['recipeName']?.touched">
-                  <div [hidden]="!exampleForm.controls['recipeName'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].recipeName.invalid && exampleForm['controls']['recipeName']?.touched">
+                  <div [hidden]="!exampleForm['controls']['recipeName'].errors.required">
                     Recipe Name field can't be blank
                   </div>
                 </div>
@@ -44,8 +44,8 @@
                     <option *ngFor="let category of (categoryList$ | async)" [value]="category.id">{{category.category}}</option>
                   </select>
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeCate.invalid">
-                  <div [hidden]="!exampleForm.controls['recipeCate'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].recipeCate.invalid">
+                  <div [hidden]="!exampleForm['controls']['recipeCate'].errors.required">
                     Please select a category
                   </div>
                 </div>
@@ -60,8 +60,8 @@
                   <textarea id="subtitle" name="subtitle" placeholder="Write something.." style="height:200px"
                     formControlName="recipeSubtitle" required></textarea>
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeSubtitle.invalid && exampleForm.controls['recipeSubtitle']?.touched">
-                  <div [hidden]="!exampleForm.controls['recipeSubtitle'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].recipeSubtitle.invalid && exampleForm['controls']['recipeSubtitle']?.touched">
+                  <div [hidden]="!exampleForm['controls']['recipeSubtitle'].errors.required">
                     Recipe Subtitle field can't be blank
                   </div>
                 </div>
@@ -80,7 +80,7 @@
                     </div>
                   </div>
                   <div id="dynamicListIngredients" formArrayName="ingredients">
-                    <div *ngFor="let ingredient of exampleForm.controls.ingredients.controls; let i=index">
+                    <div *ngFor="let ingredient of exampleForm['controls'].ingredients['controls']; let i=index">
                       <div class="form-row mb-1" [formGroupName]="i">
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="inputIngredientName" aria-describedby="emailHelp"
@@ -90,12 +90,12 @@
                           <input type="text" class="form-control" id="inputIngredientAmount" aria-describedby="emailHelp"
                             placeholder="" formControlName="quantity">
                         </div>
-                        <div [ngClass]="{'col-md-3': exampleForm.controls.ingredients.controls.length == 1, 'col-md-2': exampleForm.controls.ingredients.controls.length > 1}">
+                        <div [ngClass]="{'col-md-3': exampleForm['controls'].ingredients['controls'].length == 1, 'col-md-2': exampleForm['controls'].ingredients['controls'].length > 1}">
                           <select id="inputIngredientsUnit" class="form-control" formControlName="unit">
                             <option *ngFor="let unit of units" [value]="unit.id">{{unit.title}}</option>
                           </select>
                         </div>
-                        <div class="col-md-1" style="text-align: center" *ngIf="exampleForm.controls.ingredients.controls.length > 1">
+                        <div class="col-md-1" style="text-align: center" *ngIf="exampleForm['controls'].ingredients['controls'].length > 1">
                           <button type="button" name="add" id="add" style="width: 100%" class="btn btn-danger" (click)="removeIngredientUnit(i)"><i
                               class="fa fa-trash"></i></button>
                         </div>
@@ -114,8 +114,8 @@
                   <input type="text" class="form-control" placeholder="Enter your duration" formControlName="duration"
                     required />
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.duration.invalid && exampleForm.controls['duration']?.touched">
-                  <div [hidden]="!exampleForm.controls['duration'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].duration.invalid && exampleForm['controls']['duration']?.touched">
+                  <div [hidden]="!exampleForm['controls']['duration'].errors.required">
                     Recipe Duration field can't be blank
                   </div>
                 </div>
@@ -127,8 +127,8 @@
                     <option *ngFor="let level of levels" [value]="level.id">{{level.title}}</option>
                   </select>
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.level.invalid">
-                  <div [hidden]="!exampleForm.controls['level'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].level.invalid">
+                  <div [hidden]="!exampleForm['controls']['level'].errors.required">
                     Recipe Level field can't be blank
                   </div>
                 </div>
@@ -143,8 +143,8 @@
                   <input type="text" class="form-control" placeholder="Enter your prep time" formControlName="prep"
                     required />
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.prep.invalid && exampleForm.controls['prep']?.touched">
-                  <div [hidden]="!exampleForm.controls['prep'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].prep.invalid && exampleForm['controls']['prep']?.touched">
+                  <div [hidden]="!exampleForm['controls']['prep'].errors.required">
                     Recipe Prep field can't be blank
                   </div>
                 </div>
@@ -156,8 +156,8 @@
                   <input type="text" class="form-control" placeholder="Enter your serving" formControlName="serving"
                     required />
                 </div>
-                <div class="alert alert-danger" *ngIf="exampleForm.controls.serving.invalid && exampleForm.controls['serving']?.touched">
-                  <div [hidden]="!exampleForm.controls['serving'].errors.required">
+                <div class="alert alert-danger" *ngIf="exampleForm['controls'].serving.invalid && exampleForm['controls']['serving']?.touched">
+                  <div [hidden]="!exampleForm['controls']['serving'].errors.required">
                     Recipe Serving field can't be blank
                   </div>
                 </div>
@@ -176,16 +176,16 @@
                     </div>
                   </div>
                   <div id="dynamicListSteps" formArrayName="steps">
-                    <div *ngFor="let ingredient of exampleForm.controls.steps.controls; let i=index">
+                    <div *ngFor="let ingredient of exampleForm['controls'].steps['controls']; let i=index">
                       <div class="form-row mb-1" [formGroupName]="i">
                         <div class="col-md-1" style="text-align: center;">
                           <p class="no">{{i+1}}.</p>
                         </div>
-                        <div [ngClass]="{'col-md-11': exampleForm.controls.steps.controls.length == 1, 'col-md-10': exampleForm.controls.steps.controls.length > 1}">
+                        <div [ngClass]="{'col-md-11': exampleForm['controls'].steps['controls'].length == 1, 'col-md-10': exampleForm['controls'].steps['controls'].length > 1}">
                           <textarea id="step" name="step" placeholder="Write something.." style="width:100%"
                             formControlName="step"></textarea>
                         </div>
-                        <div class="col-md-1" style="text-align: right" *ngIf="exampleForm.controls.steps.controls.length > 1">
+                        <div class="col-md-1" style="text-align: right" *ngIf="exampleForm['controls'].steps['controls'].length > 1">
                           <button type="button" name="add" id="addStep" style="width: 100%" class="btn btn-danger"
                             (click)="removeStepUnit(i)"><i class="fa fa-trash"></i></button>
                         </div>

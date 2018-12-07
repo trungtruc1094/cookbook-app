@@ -176,23 +176,23 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   // Remove or Add ingredient unit
-  private addIngredientUnit() {
+  addIngredientUnit() {
     const control = <FormArray>this.exampleForm.controls['ingredients'];
     control.push(this.getIngredientUnit());
   }
 
-  private removeIngredientUnit(i: number) {
+  removeIngredientUnit(i: number) {
     const control = <FormArray>this.exampleForm.controls['ingredients'];
     control.removeAt(i);
   }
 
   // Remove or Add step unit
-  private addStepUnit() {
+  addStepUnit() {
     const control = <FormArray>this.exampleForm.controls['steps'];
     control.push(this.getStepUnit());
   }
 
-  private removeStepUnit(i: number) {
+  removeStepUnit(i: number) {
     const control = <FormArray>this.exampleForm.controls['steps'];
     control.removeAt(i);
   }

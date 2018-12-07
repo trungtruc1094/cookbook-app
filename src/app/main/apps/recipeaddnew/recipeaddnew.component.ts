@@ -144,23 +144,23 @@ export class RecipeaddnewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // Remove or Add ingredient unit
-  private addIngredientUnit() {
+  addIngredientUnit() {
     const control = <FormArray>this.exampleForm.controls['ingredients'];
     control.push(this.getIngredientUnit());
   }
 
-  private removeIngredientUnit(i: number) {
+  removeIngredientUnit(i: number) {
     const control = <FormArray>this.exampleForm.controls['ingredients'];
     control.removeAt(i);
   }
 
   // Remove or Add step unit
-  private addStepUnit() {
+  addStepUnit() {
     const control = <FormArray>this.exampleForm.controls['steps'];
     control.push(this.getStepUnit());
   }
 
-  private removeStepUnit(i: number) {
+  removeStepUnit(i: number) {
     const control = <FormArray>this.exampleForm.controls['steps'];
     control.removeAt(i);
   }
@@ -184,10 +184,12 @@ export class RecipeaddnewComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.appsService.addNewRecipe(fileArr, recipeObj, this.appIdQueryParam, (resolve) => {
       this.store.dispatch(new Apps.DownloadingURLs(null));
+      console.log('Upload recipe success');
       this.helperService.showPNotify('Success Message', 'Upload Recipe successfully', 'success');
       this.router.navigate(['../'], { relativeTo: this.route, preserveQueryParams: true });
     },
       (error) => {
+        console.log('Upload recipe unsuccess');
         this.helperService.showPNotify('Error Message', error, 'error');
       });
   }

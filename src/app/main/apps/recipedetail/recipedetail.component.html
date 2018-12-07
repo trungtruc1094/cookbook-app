@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row">
+    <div class="col-md-3">
+      <a (click)="goBack()" style="cursor: pointer;"><i class="fa fa-arrow-left"></i></a>
+    </div>
+  </div>
+
+  <app-spinner *ngIf="!recipe"></app-spinner>
+
+  <div class="container-fluid" *ngIf="recipe">
+    <!-- Title -->
+    <div class="row justify-content-center">
+      <div class="col-6 text-center">
+        <h3 class="text-success">{{recipe.recipeName}}</h3>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-6 text-center bordered">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active" *ngFor="let url of recipe.recipeImages; let isFirstRow=first" [ngClass]="{'active': isFirstRow}">
+              <img class="d-block w-100" [src]="url" alt="First slide" style="position: relative; object-fit: cover;"
+                height="500px">
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        <p class="my-2 text-left">{{recipe.recipeSubtitle}}</p>
+
+        <p class="text-left font-weight-bold">Category: <span class="font-weight-normal">{{recipe.recipeCategory}}</span></p>
+        <p class="text-left font-weight-bold">Prep Time: <span class="font-weight-normal">{{recipe.recipePrep}}</span></p>
+        <p class="text-left font-weight-bold">Cook Time: <span class="font-weight-normal">{{recipe.recipeDuration}}</span></p>
+        <p class="text-left font-weight-bold">Serving: <span class="font-weight-normal">{{recipe.recipeServing}}</span></p>
+        <p class="text-left font-weight-bold">Level: <span class="font-weight-normal">{{recipe.recipeLevel}}</span></p>
+      </div>
+    </div>
+
+    <!-- Ingredients-->
+    <div class="row justify-content-center">
+      <div class="col-6 bordered">
+        <h4>Ingredients</h4>
+        <ul class="list-unstyled">
+          <li *ngFor="let ingredient of recipe.recipeIngredients"><span class="font-weight-bold" *ngIf="ingredient.quantity && ingredient.quantity != 0">{{ingredient.quantity}} </span><span class="font-weight-bold" *ngIf="ingredient.unit">{{ingredient.unit}} </span>{{ingredient.name}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="row justify-content-center">
+      <div class="col-6 bordered">
+        <h4>Steps</h4>
+
+        <div class="step-list">
+
+          <div class="step" *ngFor="let step of recipe.recipeSteps; let i = index">
+            <div class="step-number">{{i + 1}}</div>
+            <div class="step-desc">{{step.step}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

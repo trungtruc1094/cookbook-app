@@ -1,0 +1,38 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h3 [routerLink]="['/dashboard']" style="cursor: pointer; outline: none">Recipe Cookbook</h3>
+  </div>
+
+  <ul class="list-unstyled components">
+    <p [routerLink]="['/dashboard']" style="cursor: pointer; outline: none">Dashboard</p>
+    <li>
+      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" [ngClass]="{'dropdown-toggle':!(isLoadingApp$ | async)}">
+        Apps
+        <img src="/assets/img/spinner-cate.svg" style="position: absolute; top: calc(50% - 20px);right: 5px;width: 40px;"
+          *ngIf="(isLoadingApp$ | async)">
+      </a>
+      <ul class="collapse list-unstyled" id="homeSubmenu" *ngIf="!(isLoadingApp$ | async)">
+        <li *ngFor="let app of (appList$ | async)" routerLinkActive="active">
+          <a [routerLink]="['/apps', app.appUrl]" [queryParams]="{appId: app.id}">{{ app.appName }}<span style="float: right;">{{app.recipeQuantity}}</span></a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">About</a>
+    </li>
+    <li>
+      <a href="#">Portfolio</a>
+    </li>
+    <li>
+      <a href="#">Contact</a>
+    </li>
+  </ul>
+
+  <ul class="list-unstyled" id="logout-btn">
+    <li>
+      <a class="btn btn-outline-success logout" (click)="logout()"><i class="fa fa-user-times"></i> Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- (click)="onClick(app.appName)" -->

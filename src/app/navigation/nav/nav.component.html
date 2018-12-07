@@ -1,0 +1,47 @@
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" id="nav-content">
+  <div class="container-fluid">
+
+    <button type="button" id="sidebarCollapse" class="btn btn-info">
+      <i class="fa fa-bars"></i>
+    </button>
+
+    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-align-justify"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="nav navbar-nav ml-auto">
+        <!-- Message Badge -->
+        <!-- <li class="nav-item active">
+          <a class="nav-link" href="#">
+            <i class="fa fa-envelope-o">
+              <span class="badge badge-danger">11</span>
+            </i>
+            Messages
+          </a>
+        </li> -->
+
+        <li class="nav-item avatar">
+          <div class="avatar-section">
+            <img src="/assets/img/avatar.png" class="rounded-circle" id="avatar">
+          </div>
+          <div class="avatar-name">
+            <div class="name">{{ userEmail }}</div>
+            <div class="email">{{ userName }}</div>
+          </div>
+          <div class="avatar-icon">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right avatar-dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Account Settings</a>
+              <a class="dropdown-item" href="#">Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

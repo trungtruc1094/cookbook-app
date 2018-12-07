@@ -1,0 +1,28 @@
+#login {
+  background: url(../../../assets/img/signupBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+#login .dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#login .dark-overlay .logo-image img {
+  display:block;
+  margin:auto;
+  width: 350px;
+  height: auto;
+  padding: 20px;
+}
+
+#login .home-inner {
+  margin-top: 10px;
+}

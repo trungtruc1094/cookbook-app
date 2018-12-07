@@ -1,0 +1,290 @@
+<div class="container-fluid">
+  <!-- TITLE -->
+  <div class="row">
+    <div class="col-md-3">
+      <a (click)="goBack()" style="cursor: pointer;"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <div class="col-md-4 offset-md-1">
+      <h3 align="center">Edit Recipe</h3>
+    </div>
+  </div>
+
+  <!-- RECIPE DETAIL AND IMAGE -->
+  <div class="row">
+    <div class="container-fluid m-4 form-box">
+      <form name="userForm" class="validate" role="form" [formGroup]="exampleForm" novalidate (ngSubmit)="onSubmit(exampleForm.value, exampleForm.valid,$event)">
+        <!-- RECIPE DETAIL -->
+        <div class="row bordered p-4">
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">User Details</div>
+          <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
+            <!-- Recipe : Name -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label for="name" class="label-custom">Recipe Name</label>
+                  <input type="text" class="form-control" placeholder="Enter your recipe name" formControlName="recipeName"
+                    required />
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeName.invalid && exampleForm.controls['recipeName']?.touched">
+                  <div [hidden]="!exampleForm.controls['recipeName'].errors.required">
+                    Recipe Name field can't be blank
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Cate -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label for="category" class="label-custom">Recipe Category</label>
+                  <select class="custom-select" formControlName="recipeCate" required [disabled]="(isLoadingCate$ | async)">
+                    <option selected>Open this select menu</option>
+                    <option *ngFor="let category of (categoryList$ | async)" [value]="category.id">{{category.category}}</option>
+                  </select>
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeCate.invalid">
+                  <div [hidden]="!exampleForm.controls['recipeCate'].errors.required">
+                    Please select a category
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Subtitle -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label for="subtitle" class="label-custom">Recipe Subtitle</label>
+                  <textarea id="subtitle" name="subtitle" placeholder="Write something.." style="height:200px"
+                    formControlName="recipeSubtitle" required></textarea>
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.recipeSubtitle.invalid && exampleForm.controls['recipeSubtitle']?.touched">
+                  <div [hidden]="!exampleForm.controls['recipeSubtitle'].errors.required">
+                    Recipe Subtitle field can't be blank
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Ingredients -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label for="inputIngredients">Ingredients</label>
+                  <div class="form-row mb-1">
+                    <div class="col-md-2" style="text-align: left">
+                      <button type="button" name="add" id="add" class="btn btn-success" (click)="addIngredientUnit()">Add
+                        Ingredient</button>
+                    </div>
+                  </div>
+                  <div id="dynamicListIngredients" formArrayName="ingredients">
+                    <div *ngFor="let ingredient of exampleForm.controls.ingredients.controls; let i=index">
+                      <div class="form-row mb-1" [formGroupName]="i">
+                        <div class="col-md-6">
+                          <input type="text" class="form-control" id="inputIngredientName" aria-describedby="emailHelp"
+                            placeholder="" formControlName="name">
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" id="inputIngredientAmount" aria-describedby="emailHelp"
+                            placeholder="" formControlName="quantity">
+                        </div>
+                        <div [ngClass]="{'col-md-3': exampleForm.controls.ingredients.controls.length == 1, 'col-md-2': exampleForm.controls.ingredients.controls.length > 1}">
+                          <select id="inputIngredientsUnit" class="form-control" formControlName="unit">
+                            <option *ngFor="let unit of units" [value]="unit.id">{{unit.title}}</option>
+                          </select>
+                        </div>
+                        <div class="col-md-1" style="text-align: center" *ngIf="exampleForm.controls.ingredients.controls.length > 1">
+                          <button type="button" name="add" id="add" style="width: 100%" class="btn btn-danger" (click)="removeIngredientUnit(i)"><i
+                              class="fa fa-trash"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Duration & Level -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label for="duration" class="label-custom">Duration</label>
+                  <input type="text" class="form-control" placeholder="Enter your duration" formControlName="duration"
+                    required />
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.duration.invalid && exampleForm.controls['duration']?.touched">
+                  <div [hidden]="!exampleForm.controls['duration'].errors.required">
+                    Recipe Duration field can't be blank
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label for="category" class="label-custom">Level</label>
+                  <select class="custom-select" formControlName="level">
+                    <option *ngFor="let level of levels" [value]="level.id">{{level.title}}</option>
+                  </select>
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.level.invalid">
+                  <div [hidden]="!exampleForm.controls['level'].errors.required">
+                    Recipe Level field can't be blank
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Prep Time & Serving -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label for="prep" class="label-custom">Prep Time</label>
+                  <input type="text" class="form-control" placeholder="Enter your prep time" formControlName="prep"
+                    required />
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.prep.invalid && exampleForm.controls['prep']?.touched">
+                  <div [hidden]="!exampleForm.controls['prep'].errors.required">
+                    Recipe Prep field can't be blank
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="form-group">
+                  <label for="serving" class="label-custom">Serving</label>
+                  <input type="text" class="form-control" placeholder="Enter your serving" formControlName="serving"
+                    required />
+                </div>
+                <div class="alert alert-danger" *ngIf="exampleForm.controls.serving.invalid && exampleForm.controls['serving']?.touched">
+                  <div [hidden]="!exampleForm.controls['serving'].errors.required">
+                    Recipe Serving field can't be blank
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recipe : Steps -->
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-group">
+                  <label for="inputSteps">Steps</label>
+                  <div class="form-row mb-1">
+                    <div class="col-md-2" style="text-align: left">
+                      <button type="button" name="add" id="addStep" class="btn btn-success" (click)="addStepUnit()">Add
+                        Step</button>
+                    </div>
+                  </div>
+                  <div id="dynamicListSteps" formArrayName="steps">
+                    <div *ngFor="let ingredient of exampleForm.controls.steps.controls; let i=index">
+                      <div class="form-row mb-1" [formGroupName]="i">
+                        <div class="col-md-1" style="text-align: center;">
+                          <p class="no">{{i+1}}.</p>
+                        </div>
+                        <div [ngClass]="{'col-md-11': exampleForm.controls.steps.controls.length == 1, 'col-md-10': exampleForm.controls.steps.controls.length > 1}">
+                          <textarea id="step" name="step" placeholder="Write something.." style="width:100%"
+                            formControlName="step"></textarea>
+                        </div>
+                        <div class="col-md-1" style="text-align: right" *ngIf="exampleForm.controls.steps.controls.length > 1">
+                          <button type="button" name="add" id="addStep" style="width: 100%" class="btn btn-danger"
+                            (click)="removeStepUnit(i)"><i class="fa fa-trash"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- PHOTO DETAIL -->
+        <div class="row bordered p-4">
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">Photos</div>
+          <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+
+            <div class="row" *ngIf="isUploadingRecipe">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h5>Upload progress:</h5>
+                <table class="upload-table table">
+                  <thead>
+                    <tr>
+                      <th class="row-1 row-name">Name</th>
+                      <th class="row-2 row-progress">Progress</th>
+                      <th class="row-3 row-number">Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let upload of uploadingTasks">
+                      <td><strong>{{ upload.fileName }}</strong></td>
+                      <td style="width: 100%">
+                        <div class="progress" style="margin-bottom: 0;">
+                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': (upload.percentage | async) + '%' }"></div>
+                        </div>
+                      </td>
+                      <td style="width: 20px">
+                        <h5>{{(upload.percentage | async)}}%</h5>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div *ngIf="images.length > 0">
+                  <div id="drop-zone" class="thumb dragdrop drop-zone" *ngFor="let image of images; let i=index">
+                    <div class="fix-icon">
+                      <button type="button" (click)="removeFile(i)"><i class="fa fa-trash fa-2x"></i></button>
+                    </div>
+                    <div class="fix-thumb">
+                      <img class="img-responsive" [src]="image" />
+                    </div>
+                  </div>
+                </div>
+                <div id="drop-zone" class="thumb dragdrop drop-zone">
+                  <span style="position: absolute;left: calc(50% - 20px);top: calc(50% - 20px);"><i class="fa fa-upload fa-3x"></i></span>
+                  <input type="file" value="" accept="image/x-png, image/gif, image/jpeg" (change)="onSelectFile($event)"
+                    multiple="true" />
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div *ngIf="recipe">
+                  <h5>Results:</h5>
+                  <div class="row">
+                    <div class="col-md-4" *ngFor="let url of recipe.recipeImages; let i = index">
+                      <div class="thumbnail m-2">
+                        <div>
+                          <img class="thumbnail-image-show" [src]="url" alt="Card image cap" width="100%" height="200px"
+                            style="position: relative; object-fit: cover;">
+                        </div>
+                        <div class="fix-icon fix-icon-result">
+                          <button type="button" (click)="removeImage(i)"><i class="fa fa-trash fa-2x"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 offset-md-4" style="text-align: center;">
+            <button type="submit" class="btn btn-primary" [disabled]="exampleForm.invalid" [class.disabled]="isClickedOnce"
+              (click)="isClickedOnce = true" *ngIf="!isUploadingRecipe">Update</button>
+            <app-spinner *ngIf="isUploadingRecipe"></app-spinner>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<!-- SIGNUP -->
+<section id="signup">
+  <div class="dark-overlay">
+    <div class="logo-image">
+      <img src="../../../assets/img/logo.png" class="img-fluid img" alt="Responsive image">
+    </div>
+    <div class="home-inner container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header">
+              <h4>Account Signup</h4>
+            </div>
+            <div class="card-body">
+              <form action="index.html" #f="ngForm" (ngSubmit)="onSubmit(f)">
+                <div class="form-group">
+                  <label for="fullname">Full Name</label>
+                  <input type="text" class="form-control" #fullname="ngModel" ngModel name="fullname" required />
+                </div>
+                <div class="alert alert-danger" *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)">
+                  <div *ngIf="fullname.errors?.required">
+                    Name field can't be blank
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" #email="ngModel" ngModel name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" />
+                </div>
+                <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                  <div *ngIf="email.errors?.required">
+                    Email field can't be blank
+                  </div>
+                  <div *ngIf="email.errors?.pattern">
+                    The email id doesn't seem right
+                  </div>
+                </div>
+                <div ngModelGroup="userPassword" #userPassword="ngModelGroup" required>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" ngModel name="pwd" minlength="8" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="password1">Confirm password</label>
+                    <input type="password" class="form-control" ngModel name="confirmPwd" />
+                  </div>
+                  <div class="alert alert-danger" *ngIf="
+                          (userPassword.invalid ||
+                            userPassword.value?.pwd !=
+                              userPassword.value?.confirmPwd) &&
+                          userPassword.touched
+                        ">
+                    <div *ngIf="userPassword.invalid; else: nomatch">
+                      Password needs to be more than 8 characters
+                    </div>
+                    <ng-template #nomatch> Passwords don't match </ng-template>
+                  </div>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" #agree="ngModel" ngModel name="agree" required
+                      [ngClass]="{'text-danger': agree.invalid}">
+                    Agree to Terms and Conditions.
+                  </label>
+                </div>
+                <div class="alert alert-warning" *ngIf="agree.invalid">
+                  Please check to "Agree to Terms and Conditions."
+                </div>
+                <input type="submit" value="Register" class="btn btn-success btn-block" [disabled]="!f.form.valid" *ngIf="!(isLoading$ | async)"/>
+                <button class="btn btn-success btn-block" disabled *ngIf="(isLoading$ | async)">
+                  <h4 class="saving text-center">
+                    Registering<span>.</span><span>.</span><span>.</span>
+                  </h4>
+                </button>
+                <a routerLink="/login">
+                  <p class="text-center text-primary mt-2"><i class="fa fa-arrow-left"></i><em> Back to login</em></p>
+                </a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

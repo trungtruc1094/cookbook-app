@@ -55,15 +55,14 @@ export class HelperService {
 
     public categories = [];
 
-    public showPNotify(title, message, type) {
-        console.log('Showing notify');
-        // PNotify.defaults.styling = 'material';
+    public showPNotify(title, message, type, delay?) {
         new PNotify({
             target: document.body,
             data: {
                 title: title,
                 text: message,
-                type: type
+                type: type,
+                delay: delay ? delay : 3000
             }
         });
     }

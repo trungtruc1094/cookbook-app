@@ -32,23 +32,38 @@ export class DashboardService {
 
     // Adding new category
     addNewCategory(categoryName: string, callback, errCallback) {
-        let nextId;
+        let nextId: number;
         let category: Category;
+        let firebaseId: string;
 
         this.afStore.collection<Category>('availableCategories', ref => ref.orderBy('id', 'desc').limit(1)).valueChanges().pipe(
             take(1)
         ).subscribe(
             (result) => {
-                nextId = result[0].id + 1;
-                category = {
-                    id: nextId,
-                    category: categoryName,
-                    createdDate: new Date()
+                if (result && result.length > 0) {
+                    nextId = result[0].id + 1;
+                    firebaseId = this.afStore.createId();
+                    category = {
+                        id: nextId,
+                        category: categoryName,
+                        createdDate: new Date(),
+                        firebaseId: firebaseId
+                    }
+                } else {
+                    nextId = 0;
+                    firebaseId = this.afStore.createId();
+                    category = {
+                        id: nextId,
+                        category: categoryName,
+                        createdDate: new Date(),
+                        firebaseId: firebaseId
+                    }
                 }
+                
             },
             (error) => { },
             () => {
-                this.firebaseService.addDocument(category, 'availableCategories')
+                this.firebaseService.addDocumentWithFirebaseId(category, 'availableCategories')
                     .then(result => {
                         callback(result);
                     })

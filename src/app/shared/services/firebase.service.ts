@@ -27,6 +27,18 @@ export class FirebaseService {
             })
     }
 
+    // Modifications for adding new category
+    addDocumentWithFirebaseId(documentObj: any, collectionName: string) {
+        const id = documentObj['firebaseId'];
+        return this.afStore.collection(`${collectionName}`).doc(id).set(documentObj)
+            .then(res => {
+                return true;
+            })
+            .catch(error => {
+                throw new Error('Unable to add new document to collection');
+            })
+    }
+
     updateDocument(documentChangedObj: any, collectionName: string, documentId: string) {
         return this.afStore.doc(`${collectionName}/${documentId}`).update(documentChangedObj)
             .then(result => {

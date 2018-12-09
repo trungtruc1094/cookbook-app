@@ -3,4 +3,5 @@
 @import "~font-awesome/css/font-awesome.min.css";
 /* @import "~malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"; */
 @import url("assets/css/util.css");
-@import "node_modules/pnotify/dist/PNotifyBrightTheme.css"
+@import "node_modules/pnotify/dist/PNotifyBrightTheme.css";
+@import "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";

@@ -16,6 +16,7 @@ import * as fromRoot from '../app.reducer';
 import * as Auth from './auth.actions';
 import * as Ui from '../shared/ui.actions';
 import { AppsService } from "../main/apps/apps.service";
+import { HelperService } from "../shared/services/helper.service";
 
 @Injectable()
 export class AuthService {
@@ -29,7 +30,8 @@ export class AuthService {
     private router: Router,
     private localService: LocalStorageService,
     private store: Store<fromRoot.State>,
-    private appsService: AppsService
+    private appsService: AppsService,
+    private helperService: HelperService
   ) { }
 
   initAuthListener() {
@@ -83,7 +85,7 @@ export class AuthService {
       })
       .catch(error => {
         this.store.dispatch(new Ui.Isunloading());
-        console.log("Sign Up failed");
+        this.helperService.showPNotify('Sign Up Message', error.message, 'error', 2000);
         this.store.dispatch(new Auth.Unauthenticated());
       });
   }
@@ -118,7 +120,7 @@ export class AuthService {
       })
       .catch(error => {
         this.store.dispatch(new Ui.Isunloading());
-        console.log("Login failed 1");
+        this.helperService.showPNotify('Login Message', error.message, 'error', 2000);
         this.store.dispatch(new Auth.Unauthenticated());
       });
   }

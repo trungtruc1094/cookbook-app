@@ -17,7 +17,8 @@ declare var $: any;
 export class NavComponent implements OnInit, AfterViewInit {
   user$: Observable<User>;
   userName: String = '';
-  userEmail: String = ''
+  userEmail: String = '';
+  userAvatar: String;
 
   constructor(private authService: AuthService, private store: Store<fromRoot.State>, private localService: LocalStorageService) { }
 
@@ -27,12 +28,16 @@ export class NavComponent implements OnInit, AfterViewInit {
       if (result) {
         this.userEmail = result.email;
         this.userName = result.fullName;
+        this.userAvatar = result.avatar;
+        console.log('Avatar: ', this.userAvatar);
       }
     });
 
     if (this.authService.isAuth) {
       this.userEmail = this.localService.get("af_current_user")['email'];
       this.userName = this.localService.get("af_current_user")['fullName'];
+      this.userAvatar = this.localService.get("af_current_user")['avatar'];
+      console.log('Avatar Local: ', this.userAvatar);
     }
   }
 

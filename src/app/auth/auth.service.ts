@@ -38,7 +38,6 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         console.log('User Authenticate: ', user);
-        // this.authChange.next(true);
         this.store.dispatch(new Auth.Authenticated(this.af_current_user));
         // Loading Category from Service
         this.appsService.getCategoryList();
@@ -109,7 +108,8 @@ export class AuthService {
             this.af_current_user = {
               userId: result,
               fullName: user['fullName'],
-              email: user['email']
+              email: user['email'],
+              avatar: user['avatar']
             }
             this.store.dispatch(new Auth.Authenticated(this.af_current_user));
             this.localService.set("af_current_user", this.af_current_user);
